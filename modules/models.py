@@ -20,6 +20,7 @@ class Producto(Base):
     nombre = Column(String(100))
     descripcion = Column(String(500))
     valor = Column(Float)
+    nivelCuidado = Column(Integer)
     estimado_rosas = Column(Integer)
     estimado_chocolates = Column(Integer)
 #Una Venta se relaciona con los Productos por medio de la tabla enlace ProductosComprados
@@ -34,6 +35,8 @@ class Domicilio(Base):
     municipio = Column(String(50))
     codigoPostal = Column(Integer)
     infoAdicional = Column(String(500))
+    idPedido = Column(Integer, ForeignKey("pedido.idPedido"))
+    pedido = relationship("Pedido")
 
 class Pedido(Base):
     __tablename__ = "pedido"
