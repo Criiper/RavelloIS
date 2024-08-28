@@ -1,5 +1,6 @@
-#from modules.controller import Controller
-#from modules.controller import resource_path
+from modules.controller import Controller
+from modules.controller import resource_path
+from screens.homeScreen import HomeScreen
 import tkinter as tk
 
 
@@ -14,7 +15,7 @@ class Manager(tk.Tk):
 
         self.title("Copete's GS") #Nombre de la ventana
         self.geometry("1080x520") #Tamaño de la ventana
-        #self.controller = Controller()  #Instancia la clase que controla la base de datos
+        self.controller = Controller()  #Instancia la clase que controla la base de datos
 
         #Crea un Container principal donde van a colocarse las pantallas de la aplicación
         container = tk.Frame(master=self)
@@ -32,16 +33,16 @@ class Manager(tk.Tk):
         }
 
         ####INSTANCIACIÓN DE LAS PANTALLAS
-    '''
-        pantallas = [HomeScreen, InventarioScreen, ProductosScreen, VentasScreen, ComprasScreen, ClientesScreen]
+    
+        pantallas = [HomeScreen, ]
         for F in pantallas:
             frame = F(container, self)
             self.frames[F] = frame  # Usar instancias de las clases como claves
             frame.grid(row=0, column=0, sticky=tk.NSEW)
-    '''
+    
 
 
-        #self.show_frame(HomeScreen)
+        self.show_frame(HomeScreen)
     
     ##Métodos para el cambio a cada pantalla
     
@@ -70,8 +71,7 @@ class Manager(tk.Tk):
         #self.show_frame(ClientesScreen)
 
     def to_home(self):
-        pass
-        #self.show_frame(HomeScreen)
+        self.show_frame(HomeScreen)
 
     
     
