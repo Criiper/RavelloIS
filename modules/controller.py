@@ -26,16 +26,10 @@ class Controller:
         self.session = Session()
         #Crea un motor y una sesion para trabajar con la db. El echo imprime que hace
 
-    def newCliente(self, idCliente, nombre, telefono):
-
-        verificacion = self.session.query(Cliente).filter(Cliente.idCliente == idCliente).first() #Busca que el cliente no exista
-
-        if verificacion == None:
-            cliente = Cliente(idCliente=idCliente, nombre=nombre, telefono=telefono)
-            self.session.add(cliente)
-            self.session.commit()
-        else:
-            raise ProgrammingError("Cliente ya existe!")
+    def newCliente(self, nombre, telefono):
+        cliente = Cliente(nombre=nombre, telefono=telefono, pedidosHechos=0)
+        self.session.add(cliente)
+        self.session.commit()
         
     
     def newProducto(self, nombre, descripcion, valor, nivelCuidado, estimadoRosas, estimadoChocolates):
@@ -133,8 +127,8 @@ class Controller:
             raise ProgrammingError("Pedido no se encuentra en base de datos!")
 
 
-    def delCliente(self, idCliente):
-        cliente = self.session.query(Cliente).filter(Cliente.idCliente == idCliente).first()
+    def delCliente(self, telefonoCliente):
+        cliente = self.session.query(Cliente).filter(Cliente.telefono == telefonoCliente).first()
 
         if cliente == None:
             raise ProgrammingError("Cliente no se encuentra en base de datos!")
@@ -160,9 +154,9 @@ class Controller:
             self.session.delete(venta)          
 
 
-    def updateCliente(self, idCliente, nombres, telefono):
+    def updateCliente(self,nombres, telefono):
 
-        cliente = self.session.query(Cliente).filter(Cliente.idCliente == idCliente).first()
+        cliente = self.session.query(Cliente).filter(Cliente.telefono == telefono).first()
 
         if cliente != None:
             cliente.nombre=nombres

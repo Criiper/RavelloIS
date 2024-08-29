@@ -12,6 +12,7 @@ class Cliente(Base):
     idCliente = Column(Integer, primary_key=True)
     nombre = Column(String(40))
     telefono = Column(Integer)
+    pedidosHechos = Column(Integer)
 
 
 class Producto(Base):
@@ -50,8 +51,7 @@ class Pedido(Base):
     mensajeTarjeta = Column(String(1000))
     valorTotal = Column(Integer)
     medioPago = Column(String(40))
-    estadoPago = Column(Boolean)
-    estadoEntrega = Column(Boolean)
+    estado = Column(String(40))
     
 
 class ProductosVendidos(Base):

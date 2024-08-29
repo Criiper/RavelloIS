@@ -1,6 +1,7 @@
 from modules.controller import Controller
 from modules.controller import resource_path
 from screens.homeScreen import HomeScreen
+from screens.clientesScreen import ClientesScreen
 from screens.productosScreen import ProductosScreen
 import tkinter as tk
 
@@ -35,7 +36,7 @@ class Manager(tk.Tk):
 
         ####INSTANCIACIÓN DE LAS PANTALLAS
     
-        pantallas = [HomeScreen, ProductosScreen]
+        pantallas = [HomeScreen, ProductosScreen, ClientesScreen]
         for F in pantallas:
             frame = F(container, self)
             self.frames[F] = frame  # Usar instancias de las clases como claves
@@ -68,8 +69,7 @@ class Manager(tk.Tk):
         self.show_frame(ProductosScreen)
 
     def show_clientes(self):
-        pass
-        #self.show_frame(ClientesScreen)
+        self.show_frame(ClientesScreen)
 
     def to_home(self):
         self.show_frame(HomeScreen)
