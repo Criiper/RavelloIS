@@ -19,7 +19,7 @@ def resource_path(relative_path):
 
 class Controller:
     def __init__(self) -> None:
-        db_path = resource_path('copetegsdb/copetegs.db')
+        db_path = resource_path('database/ravello.db')
         db_uri = f'sqlite:///{db_path}'
         engine = sqlalchemy.create_engine(db_uri, echo=True)
         Session = sqlalchemy.orm.sessionmaker(bind=engine)
@@ -38,18 +38,14 @@ class Controller:
             raise ProgrammingError("Cliente ya existe!")
         
     
-    def newProducto(self, id, nombre, descripcion, valor, nivelCuidado, estimadoRosas, estimadoChocolates):
+    def newProducto(self, nombre, descripcion, valor, nivelCuidado, estimadoRosas, estimadoChocolates):
 
-        verificacion = self.session.query(Producto).filter(Producto.idProducto == id).first()
-
-        if verificacion == None:
-            producto = Producto(idProducto=id, nombre=nombre, valor=valor, 
+        producto = Producto(nombre=nombre, valor=valor, 
                                 descripcion=descripcion, nivelCuidado=nivelCuidado,
                                 estimadoChocolates=estimadoChocolates, estimadoRosas=estimadoRosas)
-            self.session.add(producto)
-            self.session.commit()
-        else:
-            raise ProgrammingError("Producto ya registrado!")
+        self.session.add(producto)
+        self.session.commit()
+
         
 
 
@@ -178,7 +174,7 @@ class Controller:
             raise ProgrammingError("Cliente no se encuentra en base de datos!")
         
     
-    def updateProducto(self, identificacion, newNombre, newValor, newEstimadoRosas, newEstimadoChocolates, newDescripcion):
+    def updateProducto(self, identificacion, newNombre, newValor, newNivelCuidado, newEstimadoRosas, newEstimadoChocolates, newDescripcion):
 
         producto = self.session.query(Producto).filter(Producto.idProducto == identificacion).first()
 
@@ -188,6 +184,7 @@ class Controller:
                 producto.estimado_chocolates = newEstimadoChocolates
                 producto.estimado_rosas = newEstimadoRosas
                 producto.descripcion = newDescripcion
+                producto.nivelCuidado = newNivelCuidado
 
                 self.session.commit()
         else:

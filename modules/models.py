@@ -16,13 +16,13 @@ class Cliente(Base):
 
 class Producto(Base):
     __tablename__ = "producto"
-    idProducto = Column(String(20), primary_key=True)
+    idProducto = Column(Integer, primary_key=True)
     nombre = Column(String(100))
     descripcion = Column(String(500))
     valor = Column(Float)
     nivelCuidado = Column(Integer)
-    estimado_rosas = Column(Integer)
-    estimado_chocolates = Column(Integer)
+    estimadoRosas = Column(Integer)
+    estimadoChocolates = Column(Integer)
 #Una Venta se relaciona con los Productos por medio de la tabla enlace ProductosComprados
 
 class Domicilio(Base):
@@ -44,8 +44,8 @@ class Pedido(Base):
     fechaEntrega = Column(Date)
     idCliente = Column(Integer, ForeignKey("cliente.idCliente"))
     cliente = relationship("Cliente")
-    idDomicilio = Column(Integer, ForeignKey("domicilio.idDomicilio"))
-    domicilio = relationship("Domicilio")
+    #idDomicilio = Column(Integer, ForeignKey("domicilio.idDomicilio"))
+    #domicilio = relationship("Domicilio")
     infoAdicional = Column(String(500))
     mensajeTarjeta = Column(String(1000))
     valorTotal = Column(Integer)

@@ -16,19 +16,19 @@ class HomeScreen(tk.Frame):
     
     def initWidgets(self):
 
-        LogoCopete = Image.open(resource_path("assets\\LogoRavello.png"))
+        LogoRavello = Image.open(resource_path("assets\\LogoRavello.png"))
 
         # Redimensionar la imagen
-        LogoCopete = LogoCopete.resize((500, 500), Image.LANCZOS)
+        LogoRavello = LogoRavello.resize((500, 500), Image.LANCZOS)
 
         # Convertir la imagen a un formato compatible con Tkinter
-        self.iLogoCopete = ImageTk.PhotoImage(LogoCopete)
+        self.iLogoRavello = ImageTk.PhotoImage(LogoRavello)
 
         self.iconoVenta = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoVenta.png")))
-        self.iconoProducto = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoProducto.png")))
+        self.iconoProducto = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoRosas.png")))
+        self.iconoDomicilio = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoDomicilio.png")))
+        self.iconoPedido = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoPedido.png")))
         self.iconoClientes = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoClientes.png")))
-        self.iconoInventario = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoInventario.png")))
-        self.iconoCompras = ImageTk.PhotoImage(Image.open(resource_path("assets\\iconoMasUnd.png")))
 
         frameMenu = tk.Frame(self, bg=styles.BACKGROUND)
         frameMenu.grid(row=0, column=0, sticky=tk.NSEW)
@@ -38,21 +38,21 @@ class HomeScreen(tk.Frame):
 
 
         #BOTON VENTAS
-        botonVentas = tk.Button(master=frameMenu,
-                                **styles.BOTON,
-                                text="  VENTAS",
-                                image=self.iconoVenta,
+        botonPedidos = tk.Button(master=frameMenu,
+                                **styles.BUTTON,
+                                text="  PEDIDOS",
+                                image=self.iconoPedido,
                                 command=self.manager.show_ventas)
         
-        botonVentas.bind("<Enter>", styles.on_enter)
-        botonVentas.bind("<Leave>", styles.on_leave)
+        botonPedidos.bind("<Enter>", styles.on_enter)
+        botonPedidos.bind("<Leave>", styles.on_leave)
         
-        botonVentas.pack(fill="both", expand=True, padx=20, pady=5)
+        botonPedidos.pack(fill="both", expand=True, padx=20, pady=5)
 
 
         #BOTON PRODUCTOS
         botonProducto = tk.Button(master=frameMenu,
-                                **styles.BOTON,
+                                **styles.BUTTON,
                                 text="  PRODUCTOS",
                                 image=self.iconoProducto,
                                 command=self.manager.show_productos)
@@ -64,34 +64,34 @@ class HomeScreen(tk.Frame):
 
 
         #BOTON INVENTARIO
-        botonInventario = tk.Button(master=frameMenu,
-                                **styles.BOTON,
-                                text="  INVENTARIO",
-                                image=self.iconoInventario,
+        botonDomicilios = tk.Button(master=frameMenu,
+                                **styles.BUTTON,
+                                text="  DOMICILIOS",
+                                image=self.iconoDomicilio,
                                 command=self.manager.show_inventario)
         
-        botonInventario.bind("<Enter>", styles.on_enter)
-        botonInventario.bind("<Leave>", styles.on_leave)
+        botonDomicilios.bind("<Enter>", styles.on_enter)
+        botonDomicilios.bind("<Leave>", styles.on_leave)
         
-        botonInventario.pack(fill="both", expand=True, padx=20, pady=5)
+        botonDomicilios.pack(fill="both", expand=True, padx=20, pady=5)
 
 
         #BOTON COMPRAS
-        botonCompras = tk.Button(master=frameMenu,
-                                **styles.BOTON,
-                                text="  COMPRAS",
-                                image=self.iconoCompras,
+        botonVentas = tk.Button(master=frameMenu,
+                                **styles.BUTTON,
+                                text="  VENTAS",
+                                image=self.iconoVenta,
                                 command=self.manager.show_compras)
         
-        botonCompras.bind("<Enter>", styles.on_enter)
-        botonCompras.bind("<Leave>", styles.on_leave)
+        botonVentas.bind("<Enter>", styles.on_enter)
+        botonVentas.bind("<Leave>", styles.on_leave)
         
-        botonCompras.pack(fill="both", expand=True, padx=20, pady=5)
+        botonVentas.pack(fill="both", expand=True, padx=20, pady=5)
 
 
         #BOTON CLIENTES
         botonClientes = tk.Button(master=frameMenu,
-                                **styles.BOTON,
+                                **styles.BUTTON,
                                 text="  CLIENTES",
                                 command=self.manager.show_clientes,
                                 image=self.iconoClientes)
@@ -103,5 +103,5 @@ class HomeScreen(tk.Frame):
 
        
         #LOGO COPETE
-        labelLogo = tk.Label(frameLogo, image=self.iLogoCopete, background=styles.HIGHLIGHT)
+        labelLogo = tk.Label(frameLogo, image=self.iLogoRavello, background=styles.HIGHLIGHT)
         labelLogo.pack(expand=True)

@@ -1,6 +1,7 @@
 from modules.controller import Controller
 from modules.controller import resource_path
 from screens.homeScreen import HomeScreen
+from screens.productosScreen import ProductosScreen
 import tkinter as tk
 
 
@@ -13,7 +14,7 @@ class Manager(tk.Tk):
 
         ###Hereda de Tk
 
-        self.title("Copete's GS") #Nombre de la ventana
+        self.title("Rosas Ravello | Gestión de Pedidos") #Nombre de la ventana
         self.geometry("1080x520") #Tamaño de la ventana
         self.controller = Controller()  #Instancia la clase que controla la base de datos
 
@@ -34,7 +35,7 @@ class Manager(tk.Tk):
 
         ####INSTANCIACIÓN DE LAS PANTALLAS
     
-        pantallas = [HomeScreen, ]
+        pantallas = [HomeScreen, ProductosScreen]
         for F in pantallas:
             frame = F(container, self)
             self.frames[F] = frame  # Usar instancias de las clases como claves
@@ -64,7 +65,7 @@ class Manager(tk.Tk):
 
     def show_productos(self):
         pass
-        #self.show_frame(ProductosScreen)
+        self.show_frame(ProductosScreen)
 
     def show_clientes(self):
         pass

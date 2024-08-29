@@ -1,17 +1,17 @@
 BACKGROUND = "#463353"
 LIGHT_BACKGROUND = '#6c4068'
-BUTTON = "#a75f84"
-HOVER_BUTTON = "#f289a7"
+COMPONENT = "#a75f84"
+HOVER = "#f289a7"
 HIGHLIGHT = '#f8babe'
 
-BOTON = {"height" : 80,
+BUTTON = {"height" : 80,
          "anchor": "center",
          "compound" : "left",
-         "background" : BUTTON,
+         "background" : COMPONENT,
          "foreground" : "WHITE",
-         "activebackground" : HOVER_BUTTON,
+         "activebackground" : HOVER,
          "activeforeground" : "WHITE",
-         "highlightbackground" : HOVER_BUTTON,
+         "highlightbackground" : HOVER,
          "highlightcolor" : "WHITE",
          "highlightthickness" : 2,
          "border" : 0,
@@ -21,12 +21,12 @@ BOTON = {"height" : 80,
 
 LABEL = {
       'font' : ('Abhadi', 12),
-      'background' : '#500400',
+      'background' : '#a75f84',
       'foreground' : "WHITE"
 }
 
 def on_enter(e):
-  e.widget['background'] = HOVER_BUTTON
+  e.widget['background'] = HOVER
 
 def on_leave(e):
-  e.widget['background'] = BUTTON
+  e.widget['background'] = COMPONENT
