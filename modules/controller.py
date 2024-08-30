@@ -44,17 +44,16 @@ class Controller:
 
 
     def newPedido(self, fechaEntrega, idCliente, infoAdicionalPedido,
-                  mensajeTarjeta, valorTotal,  medioPago, estadoPago,
-                  estadoEntrega, productos, genericos,
+                  mensajeTarjeta, valorTotal,  medioPago, estado, productos, genericos,
                   infoDomicilio):   
-        verificacion = self.session.query(Cliente).filter(Cliente.idCliente == idCliente).first()
+        cliente = self.session.query(Cliente).filter(Cliente.telefono == idCliente).first()
 
-        if verificacion == None:
+        if cliente == None:
             raise ProgrammingError("Cliente no se encuentra en base de datos!")
         else:
-            pedido = Pedido(fechaEntrega=fechaEntrega, idCliente=idCliente, mensajeTarjeta=mensajeTarjeta,
+            pedido = Pedido(fechaEntrega=fechaEntrega, idCliente=cliente.idCliente, mensajeTarjeta=mensajeTarjeta,
                             infoAdicional=infoAdicionalPedido, valorTotal=valorTotal, medioPago=medioPago,
-                            estadoEntrega=estadoEntrega, estadoPago=estadoPago) #primero crea Venta y la agrega a db
+                            estado=estado, idDomicilio=0) #primero crea Venta y la agrega a db
             
             self.session.add(pedido)
             self.session.commit()
@@ -64,27 +63,38 @@ class Controller:
 
             c.execute(f"SELECT COUNT(*) FROM pedido")
             resultado = c.fetchone()
-            idventa = int(resultado[0])
+            idPedido = int(resultado[0])
 
             c.close()
             conn.close()
 
             for i in range(len(productos)):
                 #Agrega los Productos comprados (y su cantidad) referenciados al Pedido a la db
-                producto = ProductosVendidos(idProducto=productos[i][0], cantidad=productos[i][1], idVenta=idventa)
+                producto = ProductosVendidos(idProducto=productos[i][0], cantidad=productos[i][1], idPedido=idPedido)
                 self.session.add(producto)
                 self.session.commit()
 
             for i in range(len(genericos)):
                 #Agrega los Productos comprados (y su cantidad) referenciados al Pedido a la db
-                producto = ProductosGenericos(nombre=genericos[i][0], cantidad=genericos[i][1], precio=genericos[i][2], idVenta=idventa)
+                producto = ProductosGenericos(nombre=genericos[i][0], cantidad=genericos[i][1], precio=genericos[i][2], idPedido=idPedido)
                 self.session.add(producto)
                 self.session.commit()
 
-            domicilio = Domicilio(nombreDestinatario=infoDomicilio[0], telefonoDestinatario=infoDomicilio[1],
-                                  nomenclatura=infoDomicilio[2], barrio=infoDomicilio[3],
-                                  municipio=infoDomicilio[4], codigoPostal=infoDomicilio[5], infoAdicional=infoDomicilio[6])
-            self.session.add(domicilio)
+            pedido = self.session.query(Pedido).filter(Pedido.idPedido == idPedido).first()
+            if len(infoDomicilio)>0:
+                domicilio = Domicilio(idPedido=pedido.idPedido, nombreDestinatario=infoDomicilio[0], telefonoDestinatario=infoDomicilio[1],
+                                    nomenclatura=infoDomicilio[2], barrio=infoDomicilio[3],
+                                    municipio=infoDomicilio[4], codigoPostal=infoDomicilio[5], infoAdicional=infoDomicilio[6])
+                self.session.add(domicilio)
+                self.session.commit()
+
+
+                domicilio = self.session.query(Domicilio).filter(Domicilio.idPedido == idPedido).first()
+                pedido.idDomicilio = domicilio.idDomicilio
+                self.session.commit()
+
+
+            cliente.pedidosHechos +=1
             self.session.commit()
 
     def delDomicilio(self, idPedido):
@@ -145,14 +155,14 @@ class Controller:
             self.session.delete(producto)
             self.session.commit()
 
-    def delVenta(self, idPedido):
+    def delPedido(self, idPedido):
         venta = self.session.query(Pedido).filter(Pedido.idPedido == idPedido).first()
 
         if venta == None:
             raise ProgrammingError("Pedido no se encuentra en base de datos!")
         else:
             self.session.delete(venta)          
-
+            self.session.commit()
 
     def updateCliente(self,nombres, telefono):
 

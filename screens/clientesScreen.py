@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import sqlite3 as sql
 from components.clientesTabla import TablaClientes
+from components.pedidosTabla import PedidosTabla
 from PIL import Image, ImageTk
 from style import styles
 from modules.controller import Controller
@@ -108,8 +109,6 @@ class ClientesScreen(tk.Frame):
             btnGuardarCliente.bind('<Enter>', styles.on_enter)
             btnGuardarCliente.bind('<Leave>', styles.on_leave)
             
-
-
             
         def zonaEliminar():
 

@@ -37,16 +37,16 @@ class Domicilio(Base):
     codigoPostal = Column(Integer)
     infoAdicional = Column(String(500))
     idPedido = Column(Integer, ForeignKey("pedido.idPedido"))
-    pedido = relationship("Pedido")
+    pedido = relationship("Pedido", back_populates="domicilio", foreign_keys=[idPedido])
 
 class Pedido(Base):
     __tablename__ = "pedido"
     idPedido = Column(Integer, primary_key=True)
-    fechaEntrega = Column(Date)
+    fechaEntrega = Column(String)
     idCliente = Column(Integer, ForeignKey("cliente.idCliente"))
     cliente = relationship("Cliente")
-    #idDomicilio = Column(Integer, ForeignKey("domicilio.idDomicilio"))
-    #domicilio = relationship("Domicilio")
+    idDomicilio = Column(Integer, ForeignKey("domicilio.idDomicilio"))
+    domicilio = relationship("Domicilio", back_populates="pedido", foreign_keys=[Domicilio.idPedido])
     infoAdicional = Column(String(500))
     mensajeTarjeta = Column(String(1000))
     valorTotal = Column(Integer)

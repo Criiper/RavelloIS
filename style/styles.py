@@ -19,6 +19,21 @@ BUTTON = {"height" : 80,
          "cursor" : "hand1"
 }
 
+BUTTON_H = {"height" : 1,
+         "anchor": "center",
+         "compound" : "left",
+         "background" : COMPONENT,
+         "foreground" : "WHITE",
+         "activebackground" : HOVER,
+         "activeforeground" : "WHITE",
+         "highlightbackground" : HOVER,
+         "highlightcolor" : "WHITE",
+         "highlightthickness" : 2,
+         "border" : 0,
+         "font" : ("Abhadi", 12),
+         "cursor" : "hand1"
+}
+
 LABEL = {
       'font' : ('Abhadi', 12),
       'background' : '#a75f84',

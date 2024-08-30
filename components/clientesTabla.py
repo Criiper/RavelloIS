@@ -34,9 +34,9 @@ class TablaClientes(tk.Frame):
 
             for registro in registros:
                 if count % 2 == 0:
-                    treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2]), tags="evenrow")
+                    treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="evenrow")
                 else:
-                    treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2]), tags="oddrow")    
+                    treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="oddrow")    
                 count+=1
 
 
@@ -64,11 +64,11 @@ class TablaClientes(tk.Frame):
 
             # Filtrar elementos de la tabla según el texto de búsqueda
             for registro in registros:
-                if busqueda in str(registro[0]):  # Comprobar si el texto de búsqueda está en el elemento
+                if busqueda in str(registro[2]):  # Comprobar si el texto de búsqueda está en el elemento
                     if count % 2 == 0:
-                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2]), tags="evenrow")
+                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="evenrow")
                     else:
-                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2]), tags="oddrow")    
+                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="oddrow")    
                     count+=1
             
             
@@ -95,7 +95,7 @@ class TablaClientes(tk.Frame):
         botonReload.grid(row=0, column=0, padx=10, pady=5)
 
         labelBusqueda = tk.Label(frameBusqueda,
-                                    text="Busca por ID",
+                                    text="Busca por Télefono",
                                     **styles.LABEL)
         labelBusqueda.grid(row=0, column=1, padx=10, pady=5)
 
@@ -146,7 +146,7 @@ class TablaClientes(tk.Frame):
 
         treeTabla.heading("ID", text="ID", anchor="center")
         treeTabla.heading("Nombres", text="Nombre ", anchor="e")
-        treeTabla.heading("Telefono", text="Precio", anchor="center")
+        treeTabla.heading("Telefono", text="Teléfono", anchor="center")
         treeTabla.heading("Pedidos Realizados", text="N°Pedidos", anchor="center")
         
         

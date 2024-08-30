@@ -42,7 +42,7 @@ class HomeScreen(tk.Frame):
                                 **styles.BUTTON,
                                 text="  PEDIDOS",
                                 image=self.iconoPedido,
-                                command=self.manager.show_ventas)
+                                command=self.manager.show_pedidos)
         
         botonPedidos.bind("<Enter>", styles.on_enter)
         botonPedidos.bind("<Leave>", styles.on_leave)
