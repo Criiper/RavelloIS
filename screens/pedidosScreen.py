@@ -75,6 +75,8 @@ class PedidosScreen(tk.Frame):
             def labelProductos(event):
 
                 
+
+                
                 def domicilioForm():
                     if domiciliosCheckVar.get() == True:
 
@@ -548,7 +550,19 @@ class PedidosScreen(tk.Frame):
             #canvas.bind_all("<MouseWheel>", _on_mousewheel)
             scrollbar.grid(row=0, column=1, sticky="ns")
 
-        
+        def pedidoToTxt():
+            try:
+                with open(resource_path('pedidos'), 'w') as txtPedido:
+                    txtPedido.write('########AGENDA DEL DÍA########')
+
+
+
+
+
+                    
+            except FileNotFoundError:
+                print("The 'docs' directory does not exist")
+
         #########################MENÚ##############################################
         contenedor = tk.Frame(master=self,
                            background=styles.BACKGROUND)
@@ -587,6 +601,17 @@ class PedidosScreen(tk.Frame):
         VentaBoton.bind("<Enter>", styles.on_enter)
         VentaBoton.bind("<Leave>", styles.on_leave)
         VentaBoton.grid(row=0, column=1, padx=10, pady=5, sticky=tk.EW)
+
+
+        btnPrintAgenta = tk.Button(master=frameMenu,
+                                **styles.BUTTON,
+                                text=" IMPRIMIR AGENDA DEL DIA",
+                                image=self.iconoPrinter,
+                                command=pedidoToTxt)
+        btnPrintAgenta.config(height=30, font=('Abhadi', 14))
+        btnPrintAgenta.bind("<Enter>", styles.on_enter)
+        btnPrintAgenta.bind("<Leave>", styles.on_leave)
+        btnPrintAgenta.grid(row=0, column=2, padx=10, pady=5, sticky=tk.EW)
 
         botonBack = tk.Button(master=frameMenu,
                                 **styles.BUTTON,
