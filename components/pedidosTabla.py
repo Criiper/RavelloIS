@@ -162,7 +162,6 @@ class PedidosTabla(tk.Frame):
 
                     hoy = datetime.now()
                     hoyStr =f"{hoy.month}/{hoy.day}/{hoy.year % 100}"
-                    print(hoyStr)
 
 
                     # Filtrar elementos de la tabla según el texto de búsqueda

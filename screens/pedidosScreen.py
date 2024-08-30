@@ -551,14 +551,72 @@ class PedidosScreen(tk.Frame):
             scrollbar.grid(row=0, column=1, sticky="ns")
 
         def pedidoToTxt():
+
+            hoy = datetime.now()
+            hoyStr =f"{hoy.month}.{hoy.day}.{hoy.year % 100}"
+            hoyStrPedido =f"{hoy.month}/{hoy.day}/{hoy.year % 100}"
+            
+
+            path = "pedidos/"+hoyStr+".txt"
+
+
             try:
-                with open(resource_path('pedidos'), 'w') as txtPedido:
-                    txtPedido.write('########AGENDA DEL DÍA########')
+                with open(resource_path(path), 'w') as txtPedido:
+                    txtPedido.write(f'########AGENDA DEL DIA:  {hoyStr}  ########')
+                    txtPedido.write("\n\n")
 
+                    conn = sql.connect(resource_path("database\\ravello.db"))
+                    c = conn.cursor()
 
+                    c.execute("SELECT * FROM pedido WHERE fechaEntrega = ?", (hoyStrPedido,))
+                    registros = c.fetchall()
+                    
+                    global count
+                    count=0
 
+                    for registro in registros:
+                        
+                        idPedido = str(registro[0])
+                        infoAdicional = str(registro[4])
+                        tarjeta = str(registro[5])
 
+                        
+                        c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],))   
+                        cliente = c.fetchone()
+                        clienteNombre = cliente[1]
+                        clienteTelefono = str(cliente[2])
+                                                
+                        c.execute("SELECT * FROM productosVendidos WHERE idPedido = ?", (registro[0],))   
+                        productos = c.fetchall()
 
+                        c.execute("SELECT * FROM productosGenericos WHERE idPedido = ?", (registro[0],))   
+                        genericos = c.fetchall()
+
+                        txtPedido.write(f"ID PEDIDO: {idPedido}\n")
+        
+                        txtPedido.write(f"Nombre Cliente: {clienteNombre}\n")
+                        txtPedido.write(f"Telefono Cliente: {clienteTelefono}\n")
+                        txtPedido.write("\n\n")
+                        txtPedido.write(f"Informacion Adicional: {infoAdicional}\n")
+                        txtPedido.write(f"Mensaje para la tarjeta: {tarjeta}\n")
+                        txtPedido.write("\n\n")
+
+                        for producto in productos:
+
+                            c.execute("SELECT * FROM producto WHERE idProducto = ?", (producto[1],))   
+                            productoInfo = c.fetchone()
+                            
+
+                            cantidad = str(producto[2])
+                            txtPedido.write(f"{count+1}. {productoInfo[1]}\nCantidad: {cantidad}\nDescripcion: {productoInfo[2]}")
+                            count+=1
+                            txtPedido.write("\n\n")
+
+                        for generico in genericos:
+                            cantidad = str(generico[3])
+                            txtPedido.write(f"{count+1}. {generico[1]}\nCantidad: {cantidad}")
+                            count+=1
+                            txtPedido.write("\n\n")
                     
             except FileNotFoundError:
                 print("The 'docs' directory does not exist")
