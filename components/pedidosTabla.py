@@ -39,6 +39,8 @@ class PedidosTabla(tk.Frame):
             c.execute("SELECT * FROM pedido")
             registros = c.fetchall()
 
+        
+
             global count
             count = 0
 
@@ -51,15 +53,18 @@ class PedidosTabla(tk.Frame):
                         if busqueda in str(registro[0]): 
                             # Comprobar si el texto de búsqueda está en el elemento
 
+                            c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],)) 
+                            cliente = c.fetchone()
+
                             if registro[3] == 0:
                                 domicilio = "recoge"
                             else:
                                 domicilio = registro[3]
                             
                             if count % 2 == 0:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
                             else:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
                             count+=1
                             
                 elif seleccion == "Fecha":
@@ -70,15 +75,18 @@ class PedidosTabla(tk.Frame):
                         if busqueda in str(registro[1]): 
                             # Comprobar si el texto de búsqueda está en el elemento
 
+                            c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],)) 
+                            cliente = c.fetchone()
+
                             if registro[3] == 0:
                                 domicilio = "recoge"
                             else:
                                 domicilio = registro[3]
 
                             if count % 2 == 0:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
                             else:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
                             count+=1
 
                 elif seleccion == "Pendientes de Pago":
@@ -86,6 +94,9 @@ class PedidosTabla(tk.Frame):
 
                     # Filtrar elementos de la tabla según el texto de búsqueda
                     for registro in registros:
+
+                        c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],)) 
+                        cliente = c.fetchone()
 
                         if registro[8] == "Por Pagar":
 
@@ -95,9 +106,9 @@ class PedidosTabla(tk.Frame):
                                 domicilio = registro[3]
 
                             if count % 2 == 0:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
                             else:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
                             count+=1
 
                 elif seleccion == "Entrega Pendiente":
@@ -105,6 +116,9 @@ class PedidosTabla(tk.Frame):
 
                     # Filtrar elementos de la tabla según el texto de búsqueda
                     for registro in registros:
+
+                        c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],)) 
+                        cliente = c.fetchone()
 
                         if registro[8] == "Entrega Pendiente":
 
@@ -114,9 +128,9 @@ class PedidosTabla(tk.Frame):
                                 domicilio = registro[3]
 
                             if count % 2 == 0:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
                             else:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
                             count+=1
 
                 elif seleccion == "Entrega no Completada":
@@ -124,6 +138,8 @@ class PedidosTabla(tk.Frame):
 
                     # Filtrar elementos de la tabla según el texto de búsqueda
                     for registro in registros:
+                        c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],))  
+                        cliente = c.fetchone()
 
                         if registro[8] == "Entrega no Completada":
 
@@ -133,9 +149,9 @@ class PedidosTabla(tk.Frame):
                                 domicilio = registro[3]
 
                             if count % 2 == 0:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
                             else:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
                             count+=1
                 
                 elif seleccion == "Entregados":
@@ -143,6 +159,9 @@ class PedidosTabla(tk.Frame):
 
                     # Filtrar elementos de la tabla según el texto de búsqueda
                     for registro in registros:
+
+                        c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],))  
+                        cliente = c.fetchone()
 
                         if registro[8] == "Entregado":
 
@@ -152,9 +171,9 @@ class PedidosTabla(tk.Frame):
                                 domicilio = registro[3]
 
                             if count % 2 == 0:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
                             else:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
                             count+=1
 
                 elif seleccion == "Pedidos del Dia":
@@ -167,6 +186,9 @@ class PedidosTabla(tk.Frame):
                     # Filtrar elementos de la tabla según el texto de búsqueda
                     for registro in registros:
 
+                        c.execute("SELECT * FROM cliente WHERE idCliente = ?", (registro[2],)) 
+                        cliente = c.fetchone()
+
                         if registro[1] == hoyStr:
 
                             if registro[3] == 0:
@@ -175,9 +197,9 @@ class PedidosTabla(tk.Frame):
                                 domicilio = registro[3]
 
                             if count % 2 == 0:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="evenrow")
                             else:
-                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
+                                treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], cliente[2], domicilio, registro[4], registro[5], registro[6], registro[7], registro[8]), tags="oddrow")    
                             count+=1
 
                 else:
@@ -409,10 +431,10 @@ class PedidosTabla(tk.Frame):
             clienteVar = tk.IntVar()
             conn = sql.connect(resource_path("database\\ravello.db"))
             c = conn.cursor()
-            c.execute("SELECT * FROM cliente WHERE telefono = ?", (valores[2],)) 
+            c.execute("SELECT * FROM cliente WHERE telefono = ?", (telefonoClienteVar.get(),)) 
             registros = c.fetchone()
-            c.close()
             clienteVar.set(registros[1])
+            
 
             idDomicilioVar = tk.StringVar()
             idDomicilioVar.set(valores[3])
@@ -497,7 +519,7 @@ class PedidosTabla(tk.Frame):
             
 
             telefonoClienteLabel = tk.Label(frameDatos,
-                                text='Valor',
+                                text='Telefono',
                                 **styles.LABEL)
             telefonoClienteLabel.grid(row=4, column=0, pady=2, padx=2, sticky=tk.NSEW)
 
@@ -509,7 +531,7 @@ class PedidosTabla(tk.Frame):
             
 
             domicilioLabel = tk.Label(frameDatos,
-                                text='Domicilio',
+                                text='ID Domicilio',
                                 **styles.LABEL)
             domicilioLabel.grid(row=1, column=2, pady=2, padx=2, sticky=tk.NSEW)
 

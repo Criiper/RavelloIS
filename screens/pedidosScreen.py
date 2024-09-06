@@ -506,7 +506,7 @@ class PedidosScreen(tk.Frame):
 
             fechaLabel = tk.Label(menu1,
                                     **styles.LABEL,
-                                    text="Cantidad de Productos",
+                                    text="Fecha de Entrega",
                                     )
             fechaLabel.grid(row=2, column=0, sticky=tk.NSEW, padx=5, pady=2)
             
