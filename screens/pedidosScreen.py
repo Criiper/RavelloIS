@@ -203,11 +203,11 @@ class PedidosScreen(tk.Frame):
                     domiciliosCheck.grid(column=0, row=0, sticky=tk.NSEW, padx=10, pady=5)
 
 
-                def añadirProductoGenerico(event, index):
+                '''def añadirProductoGenerico(event, index):
                     if entrysIds[index].get() == "":
                         entrysIds[index].config(state="readonly")
                         entrysNombres[index].config(state="normal")
-                        entrysPrecios[index].config(state="normal")
+                        entrysPrecios[index].config(state="normal")'''
                 
                 def nuevoPedido():
                     ####PEDIDO####
@@ -236,16 +236,17 @@ class PedidosScreen(tk.Frame):
 
 
 
-                    productosGenericos = []
                     productos = []
 
 
-                    for i in range(len(entrysIds)):
-                        if entrysIds[i].get() != "":
-                            productos.append([entrysIds[i].get(), int(entrysUnidades[i].get())])
-                        else:
-                            productosGenericos.append([entrysNombres[i].get(), int(entrysUnidades[i].get()), int(entrysPrecios[i].get())])
+                    for i in range(len(entrysProductos)):
+                        if entrysProductos[i].get() != "":
+                            for producto in productos_lista:
+                                if producto[0] == entrysProductos[i].get():
+                                    idProducto = producto[1]
 
+                            productos.append([idProducto, int(entrysUnidades[i].get())])
+                        
 
 
                     self.controller.newPedido(fechaEntrega=fechaEntrega,
@@ -255,7 +256,6 @@ class PedidosScreen(tk.Frame):
                                              infoAdicionalPedido=infoPedido,
                                              mensajeTarjeta=tarjeta,
                                              estado=estado,
-                                             genericos=productosGenericos,
                                              productos=productos,
                                              infoDomicilio=domicilio)
                     
@@ -268,13 +268,15 @@ class PedidosScreen(tk.Frame):
                     c = conn.cursor()
 
                     
-                    id_producto = entrysIds[index].get()
-                    c.execute("SELECT * FROM producto WHERE idProducto = ?", (id_producto,))
-                    producto = c.fetchone()
+                    nombreProducto = entrysProductos[index].get()
+                    idProducto = 0
 
-                    nombreVar = tk.StringVar()
-                    nombreVar.set(producto[1])
-                    entrysNombres[index].config(textvariable=nombreVar)
+                    for producto in productos_lista:
+                        if producto[0] == nombreProducto:
+                            idProducto = producto[1]
+                                     
+                    c.execute("SELECT * FROM producto WHERE idProducto = ?", (idProducto,))
+                    producto = c.fetchone()
 
                     precioVar = tk.IntVar()
                     precioVar.set(producto[3])
@@ -288,60 +290,56 @@ class PedidosScreen(tk.Frame):
                     c = conn.cursor()
 
                     
-                    id_producto = entrysIds[index].get()
+                    nombreProducto = entrysProductos[index].get()
+                    idProducto = 0
+
+                    for producto in productos_lista:
+                        if producto[0] == nombreProducto:
+                            idProducto = producto[1]
                     
-                    if id_producto!="": 
-                        c.execute("SELECT * FROM producto WHERE idProducto = ?", (id_producto,))
+                    if idProducto!=0: 
+                        c.execute("SELECT * FROM producto WHERE idProducto = ?", (idProducto,))
                         producto = c.fetchone()
 
                         suma_valor = int(entrysUnidades[index].get())*int(producto[3])
 
                         totalVar.set(totalVar.get()+suma_valor)
 
-                        entrysIds[index].config(state="readonly")
+                        entrysProductos[index].config(state="disabled")
                         entrysUnidades[index].config(state="readonly")
-                    else:
-                        suma_valor = int(entrysUnidades[index].get())*int(entrysPrecios[index].get())
-
-                        totalVar.set(totalVar.get()+suma_valor)
-
-                        entrysIds[index].config(state="readonly")
-                        entrysUnidades[index].config(state="readonly")
-                        entrysNombres[index].config(state="readonly")
-                        entrysPrecios[index].config(state="readonly")
 
                     c.close()
                     conn.close()
 
                 spinCantidadProductos.config(state="disabled")
                 
-                labelId = tk.Label(menu2,
+                labelNombre = ttk.Label(menu2,
                                    **styles.LABEL,
-                                   text="Id del Producto")
-                labelId.grid(row=0, column=1, sticky=tk.NSEW, padx=10, pady=5)
+                                   text="Nombre")
+                labelNombre.grid(row=0, column=1, sticky=tk.NSEW, padx=10, pady=5)
 
                 labelUnd = tk.Label(menu2,
                                    **styles.LABEL,
                                    text="Cantidad")
                 labelUnd.grid(row=0, column=2, sticky=tk.NSEW, padx=10, pady=5)
 
-                labelNombre = tk.Label(menu2,
-                                   **styles.LABEL,
-                                   text="Nombre")
-                labelNombre.grid(row=0, column=3, sticky=tk.NSEW, padx=10, pady=5)
 
                 labelPrecio = tk.Label(menu2,
                                    **styles.LABEL,
                                    text="Precio")
-                labelPrecio.grid(row=0, column=4, sticky=tk.NSEW, padx=10, pady=5)
+                labelPrecio.grid(row=0, column=3, sticky=tk.NSEW, padx=10, pady=5)
 
 
 
                 labels = []
-                entrysIds = []
+                entrysProductos = []
                 entrysUnidades = []
                 entrysNombres = []
                 entrysPrecios = []
+                conn = sql.connect(resource_path("database\\ravello.db"))
+                c = conn.cursor()
+                c.execute("SELECT nombre, idProducto FROM producto")
+                productos_lista = c.fetchall()
 
                 cProductos = int(spinCantidadProductos.get())
 
@@ -358,12 +356,19 @@ class PedidosScreen(tk.Frame):
                     labels.append(producto)
 
 
-                    idProducto = tk.Entry(menu2,
-                                             font=('Abhadi', 12))
-                    idProducto.bind('<KeyRelease>', lambda event, index=i: fillEntrys(event, index))
-                    idProducto.bind('<Return>', lambda event, index=i: añadirProductoGenerico(event, index))
-                    idProducto.grid(row=i+1, column=1, sticky=tk.NSEW, padx=10, pady=5)
-                    entrysIds.append(idProducto)
+                    ###RECOGER DATOS DE PRODUCTOS DE LA BASE DE DATOS###
+                    productos_values = [producto[0]  for producto in productos_lista]
+                    
+                    productoVar = tk.StringVar()
+                    productoEntry = ttk.Combobox(menu2,
+                                             font=('Abhadi', 12),
+                                             values=productos_values,
+                                             textvariable=productoVar,
+                                             state="readonly",
+                                             width=50)
+                    productoEntry.grid(row=i+1, column=1, sticky=tk.NSEW, padx=10, pady=5)
+                    productoEntry.bind('<Return>', lambda event, index=i: fillEntrys(event, index))
+                    entrysProductos.append(productoEntry)
 
                     cantidad = tk.Entry(menu2,
                                              font=('Abhadi', 12))
@@ -371,17 +376,11 @@ class PedidosScreen(tk.Frame):
                     cantidad.bind('<Return>', lambda event, index=i: fillValores(event, index))
                     entrysUnidades.append(cantidad)
 
-                    nombreProducto = tk.Entry(menu2,
-                                             font=('Abhadi', 12),
-                                             state="readonly",
-                                             width=35)
-                    nombreProducto.grid(row=i+1, column=3, sticky=tk.NSEW, padx=10, pady=5)
-                    entrysNombres.append(nombreProducto)
 
                     precioProducto = tk.Entry(menu2,
                                              font=('Abhadi', 12),
                                              state="readonly")
-                    precioProducto.grid(row=i+1, column=4, sticky=tk.NSEW, padx=10, pady=5)
+                    precioProducto.grid(row=i+1, column=3, sticky=tk.NSEW, padx=10, pady=5)
                     entrysPrecios.append(precioProducto)
 
 
@@ -519,11 +518,29 @@ class PedidosScreen(tk.Frame):
             entryFecha1.bind('<ButtonRelease-1>', lambda event: calendario(fechaEntregaVar))
             entryFecha1.grid(row=2, column=1, sticky=tk.EW, padx=5, pady=2)
 
-            ClienteVar = tk.IntVar()
+            '''ClienteVar = tk.IntVar()
             entryCliente = tk.Entry(menu1,
                                     font=('Abhadi', 12),
                                     textvariable=ClienteVar)
             entryCliente.grid(row=0, column=1, sticky=tk.NSEW, padx=5, pady=2)
+'''
+
+            conn = sql.connect(resource_path("database\\ravello.db"))
+            c = conn.cursor()
+            c.execute("SELECT telefono FROM cliente")
+            registros = c.fetchall()
+            
+            
+
+            ClienteVar = tk.IntVar()
+
+            entryCliente = ttk.Combobox(menu1,
+                                         height=25,
+                                         state="readonly",
+                                         textvariable=ClienteVar,
+                                         values=registros)
+            entryCliente.grid(row=0, column=1, sticky=tk.NSEW, padx=5, pady=2)
+            
 
             cboxMedioPago = ttk.Combobox(menu1,
                                          height=25,

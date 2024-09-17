@@ -62,11 +62,17 @@ class ClientesScreen(tk.Frame):
             def guardar():
                 nombre = nombreVar.get()
                 telefono = int(telefonoVar.get())
+                correo = correoEntry.get()
+                direccion = direccionEntry.get()
+                cedula = documentoEntry.get()
 
-                self.controller.newCliente(nombre=nombre, telefono=telefono)
+                self.controller.newCliente(nombre=nombre, telefono=telefono, correo=correo, direccion=direccion, cedula=cedula)
 
                 nombreVar.set("")
                 telefonoVar.set("")
+                correoVar.set("")
+                direccionVar.set("")
+                documentoVar.set("")
 
             for widgets in frameMesa.winfo_children():
                 widgets.destroy()
@@ -77,25 +83,61 @@ class ClientesScreen(tk.Frame):
             nombreLabel = tk.Label(master=frameMesa,
                             **styles.LABEL,
                             text="Nombre")
-            nombreLabel.grid(column=0, row=0, padx=5, pady=5, sticky=tk.NSEW)
+            nombreLabel.grid(column=0, row=1, padx=5, pady=5, sticky=tk.NSEW)
 
             nombreVar = tk.StringVar()
             nombreEntry = tk.Entry(master=frameMesa,
                                 font=('Abhadi', 12),
                                 textvariable=nombreVar)
-            nombreEntry.grid(column=1, row=0, padx=5, pady=5, sticky=tk.NSEW)
+            nombreEntry.grid(column=0, row=2, padx=5, pady=5, sticky=tk.NSEW)
+
+
+            documentoLabel = tk.Label(master=frameMesa,
+                            **styles.LABEL,
+                            text="Numero de Documento")
+            documentoLabel.grid(column=1, row=1, padx=5, pady=5, sticky=tk.NSEW)
+
+            documentoVar = tk.StringVar()
+            documentoEntry = tk.Entry(master=frameMesa,
+                                font=('Abhadi', 12),
+                                textvariable=documentoVar)
+            documentoEntry.grid(column=1, row=2, padx=5, pady=5, sticky=tk.NSEW)
+
+
+            correoLabel = tk.Label(master=frameMesa,
+                            **styles.LABEL,
+                            text="Correo Electronico")
+            correoLabel.grid(column=0, row=3, padx=5, pady=5, sticky=tk.NSEW)
+
+            correoVar = tk.StringVar()
+            correoEntry = tk.Entry(master=frameMesa,
+                                font=('Abhadi', 12),
+                                textvariable=correoVar)
+            correoEntry.grid(column=0, row=4, padx=5, pady=5, sticky=tk.NSEW)
+
+
+            direccionLabel = tk.Label(master=frameMesa,
+                            **styles.LABEL,
+                            text="Dirección")
+            direccionLabel.grid(column=1, row=3, padx=5, pady=5, sticky=tk.NSEW)
+
+            direccionVar = tk.StringVar()
+            direccionEntry = tk.Entry(master=frameMesa,
+                                font=('Abhadi', 12),
+                                textvariable=direccionVar)
+            direccionEntry.grid(column=1, row=4, padx=5, pady=5, sticky=tk.NSEW)
 
 
             telefonoLabel = tk.Label(master=frameMesa,
                             **styles.LABEL,
                             text="Teléfono")
-            telefonoLabel.grid(column=0, row=1, padx=5, pady=5, sticky=tk.NSEW)
+            telefonoLabel.grid(column=0, row=0, padx=5, pady=5, sticky=tk.NSEW)
 
             telefonoVar = tk.StringVar()
             telefonoEntry = tk.Entry(master=frameMesa,
                                 font=('Abhadi', 12),
                                 textvariable=telefonoVar)
-            telefonoEntry.grid(column=1, row=1, padx=5, pady=5, sticky=tk.NSEW)
+            telefonoEntry.grid(column=1, row=0, padx=5, pady=5, sticky=tk.NSEW)
 
 
             btnGuardarCliente = tk.Button(master=frameMesa,
@@ -105,7 +147,7 @@ class ClientesScreen(tk.Frame):
                                         command=guardar)
             
             btnGuardarCliente.config(height=30)
-            btnGuardarCliente.grid(row=2, column=1, padx=10, pady=15, sticky=tk.NSEW)
+            btnGuardarCliente.grid(row=5, column=1, padx=10, pady=15, sticky=tk.NSEW)
             btnGuardarCliente.bind('<Enter>', styles.on_enter)
             btnGuardarCliente.bind('<Leave>', styles.on_leave)
             
@@ -120,7 +162,9 @@ class ClientesScreen(tk.Frame):
 
                 nombreVar.set("")
                 telefonoVar.set("")
-                pedidosVar.set("")
+                direccionVar.set("")
+                correoVar.set("")
+                cedulaVar.set("")
 
             def buscar():
                 identificacion = telefonoVar.get()
@@ -133,7 +177,9 @@ class ClientesScreen(tk.Frame):
                 for registro in registros:
                     if str(registro[2]) == identificacion:
                         nombreVar.set(registro[1])
-                        pedidosVar.set(registro[3])
+                        direccionVar.set(registro[5])
+                        correoVar.set(registro[4])
+                        cedulaVar.set(registro[6])
                         
             
             for widgets in frameMesa.winfo_children():
@@ -164,19 +210,46 @@ class ClientesScreen(tk.Frame):
                                 textvariable=telefonoVar)
             telefonoEntry.grid(column=1, row=0, padx=5, pady=5, sticky=tk.NSEW)
 
-            pedidosLabel = tk.Label(master=frameMesa,
+            correoLabel = tk.Label(master=frameMesa,
                             **styles.LABEL,
-                            text="Pedidos Realizados")
-            pedidosLabel.grid(column=1, row=2, padx=5, pady=5, sticky=tk.NSEW)
+                            text="Correo Electronico")
+            correoLabel.grid(column=1, row=2, padx=5, pady=5, sticky=tk.NSEW)
 
-            pedidosVar = tk.StringVar()
-            pedidosEntry = tk.Entry(master=frameMesa,
+            correoVar = tk.StringVar()
+            correoEntry = tk.Entry(master=frameMesa,
                                 font=('Abhadi', 12),
-                                textvariable=pedidosVar,
+                                textvariable=correoVar,
                                 state="disabled")
-            pedidosEntry.grid(column=1, row=3, padx=5, pady=5, sticky=tk.NSEW)
+            correoEntry.grid(column=1, row=3, padx=5, pady=5, sticky=tk.NSEW)
 
 
+
+            direccionLabel = tk.Label(master=frameMesa,
+                            **styles.LABEL,
+                            text="Direccion")
+            direccionLabel.grid(column=0, row=4, padx=5, pady=5, sticky=tk.NSEW)
+
+            direccionVar = tk.StringVar()
+            direccionEntry = tk.Entry(master=frameMesa,
+                                font=('Abhadi', 12),
+                                textvariable=direccionVar,
+                                state="disabled")
+            direccionEntry.grid(column=0, row=5, padx=5, pady=5, sticky=tk.NSEW)
+
+
+            cedulaLabel = tk.Label(master=frameMesa,
+                            **styles.LABEL,
+                            text="Numero de Documento")
+            cedulaLabel.grid(column=1, row=4, padx=5, pady=5, sticky=tk.NSEW)
+
+            cedulaVar = tk.StringVar()
+            cedulaEntry = tk.Entry(master=frameMesa,
+                                font=('Abhadi', 12),
+                                textvariable=cedulaVar,
+                                state="disabled")
+            cedulaEntry.grid(column=1, row=5, padx=5, pady=5, sticky=tk.NSEW)
+
+        
 
             btnBorrarCliente = tk.Button(master=frameMesa,
                                         text="BORRAR",
@@ -185,7 +258,7 @@ class ClientesScreen(tk.Frame):
                                         command=borrar)
             
             btnBorrarCliente.config(height=30)
-            btnBorrarCliente.grid(row=4, column=1, padx=10, pady=15, sticky=tk.NSEW)
+            btnBorrarCliente.grid(row=6, column=1, padx=10, pady=15, sticky=tk.NSEW)
             btnBorrarCliente.bind('<Enter>', styles.on_enter)
             btnBorrarCliente.bind('<Leave>', styles.on_leave)
             
@@ -209,13 +282,18 @@ class ClientesScreen(tk.Frame):
             def guardar():
                 nombre = nombreVar.get()
                 telefono = int(telefonoVar.get())
+                correo = correoVar.get()
+                direccion = direccionVar.get()
+                cedula = cedulaVar.get()
 
-                self.controller.updateCliente(nombres=nombre, telefono=telefono)
+                self.controller.updateCliente(nombres=nombre, telefono=telefono, correo=correo, direccion=direccion, cedula=cedula)
 
 
                 nombreVar.set("")
                 telefonoVar.set("")
-                pedidosVar.set("")
+                correoVar.set("")
+                direccionVar.set("")
+                cedulaVar.set("")
 
             def buscar():
                 identificacion = telefonoVar.get()
@@ -228,7 +306,9 @@ class ClientesScreen(tk.Frame):
                 for registro in registros:
                     if str(registro[2]) == identificacion:
                         nombreVar.set(registro[1])
-                        pedidosVar.set(registro[3])
+                        correoVar.set(registro[4])
+                        direccionVar.set(registro[5])
+                        cedulaVar.set(registro[6])
                         
             
             for widgets in frameMesa.winfo_children():
@@ -258,18 +338,41 @@ class ClientesScreen(tk.Frame):
                                 textvariable=telefonoVar)
             telefonoEntry.grid(column=1, row=0, padx=5, pady=5, sticky=tk.NSEW)
 
-            pedidosLabel = tk.Label(master=frameMesa,
+            correoLabel = tk.Label(master=frameMesa,
                             **styles.LABEL,
-                            text="Pedidos Realizados")
-            pedidosLabel.grid(column=1, row=2, padx=5, pady=5, sticky=tk.NSEW)
+                            text="Correo Electronico")
+            correoLabel.grid(column=1, row=2, padx=5, pady=5, sticky=tk.NSEW)
 
-            pedidosVar = tk.StringVar()
-            pedidosEntry = tk.Entry(master=frameMesa,
+            correoVar = tk.StringVar()
+            correoEntry = tk.Entry(master=frameMesa,
                                 font=('Abhadi', 12),
-                                textvariable=pedidosVar,
-                                state="disabled")
-            pedidosEntry.grid(column=1, row=3, padx=5, pady=5, sticky=tk.NSEW)
+                                textvariable=correoVar)
+            correoEntry.grid(column=1, row=3, padx=5, pady=5, sticky=tk.NSEW)
 
+
+            direccionLabel = tk.Label(master=frameMesa,
+                            **styles.LABEL,
+                            text="Direccion")
+            direccionLabel.grid(column=0, row=4, padx=5, pady=5, sticky=tk.NSEW)
+
+            direccionVar = tk.StringVar()
+            direccionEntry = tk.Entry(master=frameMesa,
+                                font=('Abhadi', 12),
+                                textvariable=direccionVar)
+            direccionEntry.grid(column=0, row=5, padx=5, pady=5, sticky=tk.NSEW)
+
+
+            
+            cedulaLabel = tk.Label(master=frameMesa,
+                            **styles.LABEL,
+                            text="Numero de Documento")
+            cedulaLabel.grid(column=1, row=4, padx=5, pady=5, sticky=tk.NSEW)
+
+            cedulaVar = tk.StringVar()
+            cedulaEntry = tk.Entry(master=frameMesa,
+                                font=('Abhadi', 12),
+                                textvariable=cedulaVar)
+            cedulaEntry.grid(column=1, row=5, padx=5, pady=5, sticky=tk.NSEW)
 
 
             btnGuardarCliente = tk.Button(master=frameMesa,
@@ -279,7 +382,7 @@ class ClientesScreen(tk.Frame):
                                         command=guardar)
             
             btnGuardarCliente.config(height=30)
-            btnGuardarCliente.grid(row=4, column=1, padx=10, pady=15, sticky=tk.NSEW)
+            btnGuardarCliente.grid(row=6, column=1, padx=10, pady=15, sticky=tk.NSEW)
             btnGuardarCliente.bind('<Enter>', styles.on_enter)
             btnGuardarCliente.bind('<Leave>', styles.on_leave)
             

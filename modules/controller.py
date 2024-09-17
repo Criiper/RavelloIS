@@ -1,6 +1,6 @@
 import sqlalchemy
 import sqlalchemy.orm
-from modules.models import Cliente, Producto, Pedido, ProductosVendidos, Domicilio, ProductosGenericos
+from modules.models import Cliente, Producto, Pedido, ProductosVendidos, Domicilio
 from sqlite3 import ProgrammingError
 import sqlite3 as sql
 import os
@@ -26,8 +26,8 @@ class Controller:
         self.session = Session()
         #Crea un motor y una sesion para trabajar con la db. El echo imprime que hace
 
-    def newCliente(self, nombre, telefono):
-        cliente = Cliente(nombre=nombre, telefono=telefono, pedidosHechos=0)
+    def newCliente(self, nombre, telefono, correo, direccion, cedula):
+        cliente = Cliente(nombre=nombre, telefono=telefono, pedidosHechos=0, correo=correo, direccion=direccion, cedula=cedula)
         self.session.add(cliente)
         self.session.commit()
         
@@ -44,8 +44,7 @@ class Controller:
 
 
     def newPedido(self, fechaEntrega, idCliente, infoAdicionalPedido,
-                  mensajeTarjeta, valorTotal,  medioPago, estado, productos, genericos,
-                  infoDomicilio):   
+                  mensajeTarjeta, valorTotal,  medioPago, estado, productos, infoDomicilio):   
         cliente = self.session.query(Cliente).filter(Cliente.telefono == idCliente).first()
 
         if cliente == None:
@@ -74,12 +73,7 @@ class Controller:
                 self.session.add(producto)
                 self.session.commit()
 
-            for i in range(len(genericos)):
-                #Agrega los Productos comprados (y su cantidad) referenciados al Pedido a la db
-                producto = ProductosGenericos(nombre=genericos[i][0], cantidad=genericos[i][1], precio=genericos[i][2], idPedido=idPedido)
-                self.session.add(producto)
-                self.session.commit()
-
+            
             pedido = self.session.query(Pedido).filter(Pedido.idPedido == idPedido).first()
             if len(infoDomicilio)>0:
                 domicilio = Domicilio(idPedido=pedido.idPedido, nombreDestinatario=infoDomicilio[0], telefonoDestinatario=infoDomicilio[1],
@@ -164,13 +158,16 @@ class Controller:
             self.session.delete(venta)          
             self.session.commit()
 
-    def updateCliente(self,nombres, telefono):
+    def updateCliente(self,nombres, telefono, correo, direccion, cedula):
 
         cliente = self.session.query(Cliente).filter(Cliente.telefono == telefono).first()
 
         if cliente != None:
             cliente.nombre=nombres
             cliente.telefono = telefono
+            cliente.correo = correo
+            cliente.direccion = direccion
+            cliente.cedula  = cedula
             
             self.session.commit()
         

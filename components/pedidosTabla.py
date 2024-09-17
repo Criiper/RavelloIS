@@ -417,7 +417,7 @@ class PedidosTabla(tk.Frame):
             item = treeTabla.focus()
             valores = treeTabla.item(item, 'values')
 
-
+            print(valores)
 
             idPedido = tk.StringVar()
             idPedido.set(str(valores[0]))

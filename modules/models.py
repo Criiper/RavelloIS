@@ -13,6 +13,9 @@ class Cliente(Base):
     nombre = Column(String(40))
     telefono = Column(Integer)
     pedidosHechos = Column(Integer)
+    correo = Column(String(40))
+    direccion = Column(String(40))
+    cedula = Column(String(40))
 
 
 class Producto(Base):
@@ -62,16 +65,6 @@ class ProductosVendidos(Base):
     idPedido = Column(Integer, ForeignKey("pedido.idPedido"))
     producto = relationship("Producto")
     pedido = relationship("Pedido")
-
-
-class ProductosGenericos(Base):
-    __tablename__ = "productosGenericos"
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String(100))
-    precio = Column(Integer)
-    cantidad = Column(Integer)
-    idPedido = Column(Integer, ForeignKey("pedido.idPedido"))
-    Pedido = relationship("Pedido")
 
 
 if __name__ == "__main__":

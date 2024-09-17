@@ -34,9 +34,9 @@ class TablaClientes(tk.Frame):
 
             for registro in registros:
                 if count % 2 == 0:
-                    treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="evenrow")
+                    treeTabla.insert(parent="", index=0, iid=count, values=(registro[6], registro[1], registro[2], registro[4], registro[5], registro[3]), tags="evenrow")
                 else:
-                    treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="oddrow")    
+                    treeTabla.insert(parent="", index=0, iid=count, values=(registro[6], registro[1], registro[2], registro[4], registro[5], registro[3]), tags="oddrow")    
                 count+=1
 
 
@@ -66,9 +66,9 @@ class TablaClientes(tk.Frame):
             for registro in registros:
                 if busqueda in str(registro[2]):  # Comprobar si el texto de búsqueda está en el elemento
                     if count % 2 == 0:
-                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="evenrow")
+                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[6], registro[1], registro[2], registro[4], registro[5], registro[3]), tags="evenrow")
                     else:
-                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[0], registro[1], registro[2], registro[3]), tags="oddrow")    
+                        treeTabla.insert(parent="", index=0, iid=count, values=( registro[6], registro[1], registro[2], registro[4], registro[5], registro[3]), tags="oddrow")    
                     count+=1
             
             
@@ -134,19 +134,23 @@ class TablaClientes(tk.Frame):
 
         treeBarra.config(command=treeTabla.yview)
 
-        treeTabla['columns'] = ("ID", "Nombres", "Telefono", "Pedidos Realizados")
+        treeTabla['columns'] = ("ID", "Nombres", "Telefono", "Correo", "Direccion", "Pedidos Realizados")
 
         treeTabla.column("#0", width=0, stretch=False)
-        treeTabla.column("ID", width=40, minwidth=20, anchor="center")
+        treeTabla.column("ID", width=60, minwidth=20, anchor="center")
         treeTabla.column("Nombres", width=90, minwidth=80, anchor="e")
         treeTabla.column("Telefono", width=40, minwidth=20, anchor="center")
-        treeTabla.column("Pedidos Realizados", width=40, minwidth=40, anchor="center")
+        treeTabla.column("Correo", width=90, minwidth=80, anchor="e")
+        treeTabla.column("Direccion", width=90, minwidth=80, anchor="e")
+        treeTabla.column("Pedidos Realizados", width=20, minwidth=20, anchor="center")
         
         
 
-        treeTabla.heading("ID", text="ID", anchor="center")
+        treeTabla.heading("ID", text="Documento de Identificacion", anchor="center")
         treeTabla.heading("Nombres", text="Nombre ", anchor="e")
         treeTabla.heading("Telefono", text="Teléfono", anchor="center")
+        treeTabla.heading("Correo", text="Correo", anchor="e")
+        treeTabla.heading("Direccion", text="Direccion ", anchor="e")
         treeTabla.heading("Pedidos Realizados", text="N°Pedidos", anchor="center")
         
         
