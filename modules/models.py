@@ -41,11 +41,12 @@ class Domicilio(Base):
     infoAdicional = Column(String(500))
     idPedido = Column(Integer, ForeignKey("pedido.idPedido"))
     pedido = relationship("Pedido", back_populates="domicilio", foreign_keys=[idPedido])
+    zona = Column(String(20))
 
 class Pedido(Base):
     __tablename__ = "pedido"
     idPedido = Column(Integer, primary_key=True)
-    fechaEntrega = Column(String)
+    fechaEntrega = Column(Date)
     idCliente = Column(Integer, ForeignKey("cliente.idCliente"))
     cliente = relationship("Cliente")
     idDomicilio = Column(Integer, ForeignKey("domicilio.idDomicilio"))
@@ -56,6 +57,7 @@ class Pedido(Base):
     medioPago = Column(String(40))
     estado = Column(String(40))
     
+    
 
 class ProductosVendidos(Base):
     __tablename__ = "productosVendidos"
@@ -65,7 +67,6 @@ class ProductosVendidos(Base):
     idPedido = Column(Integer, ForeignKey("pedido.idPedido"))
     producto = relationship("Producto")
     pedido = relationship("Pedido")
-
 
 if __name__ == "__main__":
     engine = create_engine('sqlite:///database\\ravello.db', echo=True)

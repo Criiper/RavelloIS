@@ -54,6 +54,13 @@ class PedidosScreen(tk.Frame):
             entry.set(cal.get_date())
             calendarioWin.destroy()
 
+        def convertir_fecha(fecha):
+                partes = fecha.split('/')
+                fecha = partes[2]+"-"+partes[0]+"-"+partes[1]
+                fecha = datetime.strptime(fecha, '%y-%m-%d')
+                return fecha.date()
+        
+
         def reloj():
             labelTime = tk.Label(master=frameMenu, 
                                  **styles.LABEL,
@@ -214,7 +221,11 @@ class PedidosScreen(tk.Frame):
                     cliente = ClienteVar.get()
                     medioPago = cboxMedioPago.get()
                     valor = totalVar.get()
-                    fechaEntrega = fechaEntregaVar.get()
+
+                    
+                    fechaEntrega = convertir_fecha(fechaEntregaVar.get())
+                    
+
                     infoPedido = infoEntry.get("1.0","end-1c")
                     tarjeta = mensajeEntry.get("1.0","end-1c")
                     estado = "Por Pagar"
@@ -225,8 +236,8 @@ class PedidosScreen(tk.Frame):
                         nombre = nombreVar.get()
                         telefono = int(telefonoVar.get())
                         nomenclatura = direccionVar.get()
-                        barrio = barrioVar.get()
-                        municipio = ciudadVar.get()
+                        barrio = barrioVar.get().lower()
+                        municipio = ciudadVar.get().lower()
                         postal = int(postalVar.get())
                         infoAdicional = infoDomiVar.get()
 

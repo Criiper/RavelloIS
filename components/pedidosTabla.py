@@ -352,17 +352,6 @@ class PedidosTabla(tk.Frame):
 
                     conn.commit()
 
-                    c.execute("SELECT * FROM productosGenericos WHERE idPedido = ?", (pedidoId,))
-                    registros = c.fetchall()
-
-                    for registro in registros:
-                        
-                        if count % 2 == 0:
-                            treeFactura.insert(parent="", index=0, iid=count, values=( "", registro[1], registro[3], registro[2]), tags="evenrow")
-                        else:
-                            treeFactura.insert(parent="", index=0, iid=count, values=( "", registro[1], registro[3], registro[2]), tags="oddrow")    
-                        count+=1
-
                     c.close()
                     conn.close()
                 

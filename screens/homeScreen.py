@@ -63,12 +63,12 @@ class HomeScreen(tk.Frame):
         botonProducto.pack(fill="both", expand=True, padx=20, pady=5)
 
 
-        #BOTON INVENTARIO
+        #BOTON DOMICILIOS
         botonDomicilios = tk.Button(master=frameMenu,
                                 **styles.BUTTON,
                                 text="  DOMICILIOS",
                                 image=self.iconoDomicilio,
-                                command=self.manager.show_inventario)
+                                command=self.manager.show_domicilios)
         
         botonDomicilios.bind("<Enter>", styles.on_enter)
         botonDomicilios.bind("<Leave>", styles.on_leave)
@@ -76,12 +76,12 @@ class HomeScreen(tk.Frame):
         botonDomicilios.pack(fill="both", expand=True, padx=20, pady=5)
 
 
-        #BOTON COMPRAS
+        #BOTON VENTAS
         botonVentas = tk.Button(master=frameMenu,
                                 **styles.BUTTON,
                                 text="  VENTAS",
                                 image=self.iconoVenta,
-                                command=self.manager.show_compras)
+                                command=self.manager.show_ventas)
         
         botonVentas.bind("<Enter>", styles.on_enter)
         botonVentas.bind("<Leave>", styles.on_leave)

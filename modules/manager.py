@@ -4,6 +4,8 @@ from screens.homeScreen import HomeScreen
 from screens.clientesScreen import ClientesScreen
 from screens.productosScreen import ProductosScreen
 from screens.pedidosScreen import PedidosScreen
+from screens.domiciliosScreen import DomiciliosScreen
+from screens.ventasScreen import VentasScreen
 import tkinter as tk
 
 
@@ -37,7 +39,7 @@ class Manager(tk.Tk):
 
         ####INSTANCIACIÓN DE LAS PANTALLAS
     
-        pantallas = [HomeScreen, ProductosScreen, ClientesScreen, PedidosScreen]
+        pantallas = [HomeScreen, ProductosScreen, ClientesScreen, PedidosScreen, DomiciliosScreen, VentasScreen]
         for F in pantallas:
             frame = F(container, self)
             self.frames[F] = frame  # Usar instancias de las clases como claves
@@ -53,16 +55,14 @@ class Manager(tk.Tk):
         frame = self.frames[container]
         frame.tkraise()
        
-    def show_inventario(self):
-        pass
-        #self.show_frame(InventarioScreen)
+    def show_ventas(self):
+        self.show_frame(VentasScreen)
         
     def show_pedidos(self):
         self.show_frame(PedidosScreen)
 
-    def show_compras(self):
-        pass
-        #self.show_frame(ComprasScreen)
+    def show_domicilios(self):
+        self.show_frame(DomiciliosScreen)
 
     def show_productos(self):
         pass
