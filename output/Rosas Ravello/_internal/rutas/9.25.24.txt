@@ -1,0 +1,118 @@
+########DOMICILIOS DEL DIA:  9.25.24  ########
+
+ZONA: zona suroccidental
+ID PEDIDO: 1
+Cliente que Envia: Cristian Perez
+Telefono Cliente: 3207976410
+
+
+Informacion Adicional: Deseo el papel de color negro y rosas blancas y rojas
+Mensaje para la tarjeta: Felicidades por graduarte!
+
+
+
+
+INFORMACION DEL DOMICILIO
+id del Domicilio: 1
+Nombre de quien recibe: Joaquin Perez
+Telefono de quien recibe: 3113440518
+Direccion: Diagonal 75B
+Barrio: la mota
+Ciudad: medellin
+Informacion Adicional de Entrega: Dejar en porteria
+
+
+1. Bouquet 100
+Cantidad: 1
+Descripcion: Ramo Buchon con papel coreano
+Nivel de Cuidado: 8
+
+
+
+ZONA: zona suroccidental
+ID PEDIDO: 4
+Cliente que Envia: Jose Perez
+Telefono Cliente: 3148978007
+
+
+Informacion Adicional: NO
+Mensaje para la tarjeta: NO
+
+
+
+
+INFORMACION DEL DOMICILIO
+id del Domicilio: 3
+Nombre de quien recibe: Cristian Perez
+Telefono de quien recibe: 3207976410
+Direccion: La 80
+Barrio: belen
+Ciudad: medellin
+Informacion Adicional de Entrega: Apto 302
+
+
+2. Caja Libro 
+Cantidad: 1
+Descripcion: Caja con rosas grandes y limpias, de cualquier color. Lleva chocolates ferrero
+Nivel de Cuidado: 6
+
+
+
+ZONA: zona centro occidental
+ID PEDIDO: 5
+Cliente que Envia: Juan Moreno
+Telefono Cliente: 3233248892
+
+
+Informacion Adicional: Rosas azules 
+Mensaje para la tarjeta: Feliz dia amor
+
+
+
+
+INFORMACION DEL DOMICILIO
+id del Domicilio: 4
+Nombre de quien recibe: Andrea Perez
+Telefono de quien recibe: 3206900875
+Direccion: Escaleras
+Barrio: san javier
+Ciudad: medellin
+Informacion Adicional de Entrega: Si no hay nadie dejar con la vecina
+
+
+3. Caja mitad ferrero bajita
+Cantidad: 1
+Descripcion: Caja con rosas de cualquier color y chocolates
+Nivel de Cuidado: 3
+
+
+
+ZONA: zona nororiental
+ID PEDIDO: 6
+Cliente que Envia: Cristian Perez
+Telefono Cliente: 3207976410
+
+
+Informacion Adicional: No
+Mensaje para la tarjeta: No
+
+
+
+
+INFORMACION DEL DOMICILIO
+id del Domicilio: 5
+Nombre de quien recibe: Juan Perez
+Telefono de quien recibe: 23245895
+Direccion: Av 80
+Barrio: aranjuez
+Ciudad: medellin
+Informacion Adicional de Entrega: Si no hay nadie, dejar con la vecina
+
+
+4. Caja mitad ferrero bajita
+Cantidad: 1
+Descripcion: Caja con rosas de cualquier color y chocolates
+Nivel de Cuidado: 3
+
+
+
